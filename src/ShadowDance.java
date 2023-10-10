@@ -16,7 +16,7 @@ public class ShadowDance extends AbstractGame  {
     private final static String CSV_FILE_1 = "res/level1.csv";
     private final static String CSV_FILE_2 = "res/level2.csv";
     private final static String CSV_FILE_3 = "res/level3.csv";
-    private static String CSV_FILE = CSV_FILE_1;
+    private String CSV_FILE;
     public final static String FONT_FILE = "res/FSO8BITR.TTF";
     private final static int TITLE_X = 220;
     private final static int TITLE_Y = 250;
@@ -42,6 +42,7 @@ public class ShadowDance extends AbstractGame  {
 
     public ShadowDance(){
         super(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE);
+        CSV_FILE = CSV_FILE_2;
         readCsv();
     }
 
@@ -53,7 +54,6 @@ public class ShadowDance extends AbstractGame  {
         ShadowDance game = new ShadowDance();
         game.run();
     }
-
 
 
     private void readCsv() {
@@ -120,16 +120,25 @@ public class ShadowDance extends AbstractGame  {
                     TITLE_X + INS_X_OFFSET, TITLE_Y + INS_Y_OFFSET);
 
             if (input.wasPressed(Keys.NUM_1)) {
+                System.out.println("Key 1 Pressed");
                 started = true;
                 CSV_FILE = CSV_FILE_1;
+                System.out.println("Loading CSV: " + CSV_FILE);
+                track = new Track("res/track1.wav");
                 track.start();
             } else if (input.wasPressed(Keys.NUM_2)) {
+                System.out.println("Key 2 Pressed");
                 started = true;
                 CSV_FILE = CSV_FILE_2;
+                System.out.println("Loading CSV: " + CSV_FILE);
+                track = new Track("res/track2.wav");
                 track.start();
             } else if (input.wasPressed(Keys.NUM_3)) {
+                System.out.println("Key 3 Pressed");
                 started = true;
                 CSV_FILE = CSV_FILE_3;
+                System.out.println("Loading CSV: " + CSV_FILE);
+                track = new Track("res/track3.wav");
                 track.start();
             }
         } else if (finished) {
