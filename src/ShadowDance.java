@@ -13,7 +13,10 @@ public class ShadowDance extends AbstractGame  {
     private final static int WINDOW_HEIGHT = 768;
     private final static String GAME_TITLE = "SHADOW DANCE";
     private final Image BACKGROUND_IMAGE = new Image("res/background.png");
-    private final static String CSV_FILE = "res/level1-60.csv";
+    private final static String CSV_FILE_1 = "res/level1.csv";
+    private final static String CSV_FILE_2 = "res/level2.csv";
+    private final static String CSV_FILE_3 = "res/level3.csv";
+    private static String CSV_FILE = CSV_FILE_1;
     public final static String FONT_FILE = "res/FSO8BITR.TTF";
     private final static int TITLE_X = 220;
     private final static int TITLE_Y = 250;
@@ -23,7 +26,7 @@ public class ShadowDance extends AbstractGame  {
     private final Font TITLE_FONT = new Font(FONT_FILE, 64);
     private final Font INSTRUCTION_FONT = new Font(FONT_FILE, 24);
     private final Font SCORE_FONT = new Font(FONT_FILE, 30);
-    private static final String INSTRUCTIONS = "Press Space to Start\nUse Arrow Keys to Play";
+    private static final String INSTRUCTIONS = "SELECT LEVELS WITH\nNUMBER KEYS\n\n     1       2       3";
     private static final int CLEAR_SCORE = 150;
     private static final String CLEAR_MESSAGE = "CLEAR!";
     private static final String TRY_AGAIN_MESSAGE = "TRY AGAIN";
@@ -116,8 +119,17 @@ public class ShadowDance extends AbstractGame  {
             INSTRUCTION_FONT.drawString(INSTRUCTIONS,
                     TITLE_X + INS_X_OFFSET, TITLE_Y + INS_Y_OFFSET);
 
-            if (input.wasPressed(Keys.SPACE)) {
+            if (input.wasPressed(Keys.NUM_1)) {
                 started = true;
+                CSV_FILE = CSV_FILE_1;
+                track.start();
+            } else if (input.wasPressed(Keys.NUM_2)) {
+                started = true;
+                CSV_FILE = CSV_FILE_2;
+                track.start();
+            } else if (input.wasPressed(Keys.NUM_3)) {
+                started = true;
+                CSV_FILE = CSV_FILE_3;
                 track.start();
             }
         } else if (finished) {
