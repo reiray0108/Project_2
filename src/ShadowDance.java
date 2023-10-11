@@ -61,7 +61,7 @@ public class ShadowDance extends AbstractGame  {
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String textRead;
             while ((textRead = br.readLine()) != null) {
-                System.out.println("Processing line: " + textRead);  // Debug line
+                System.out.println("Processing line: " + textRead);  // Debug
                 String[] splitText = textRead.split(",");
 
                 if (splitText[0].equals("Lane") && numLanes < 4) {
@@ -70,7 +70,7 @@ public class ShadowDance extends AbstractGame  {
                     int pos = Integer.parseInt(splitText[2]);
                     Lane lane = new Lane(laneType, pos);
                     lanes[numLanes++] = lane;
-                    System.out.println("Added Lane: " + laneType + " at position " + pos);  // Debug line
+                    System.out.println("Added Lane: " + laneType + " at position " + pos);  // Debug
                     System.out.println("Total lanes now: " + numLanes);
                     System.out.println("lanes.length: " + lanes.length);
                     if (numLanes > lanes.length) {
@@ -223,7 +223,7 @@ public class ShadowDance extends AbstractGame  {
         score = 0;
         currFrame = 0;
         numLanes = 0;
-        accuracy.reset();  // Assuming you have a reset method in the Accuracy class
+        accuracy.reset(); 
 
         for (int i = 0; i < lanes.length; i++) {
             lanes[i] = null;
@@ -232,14 +232,13 @@ public class ShadowDance extends AbstractGame  {
         // Reset the lanes
         for (Lane lane : lanes) {
             if (lane != null) {
-                lane.reset();  // Assuming you have a reset method in the Lane class
+                lane.reset(); 
             }
         }
     
         // Reset the track
-        track.reset();  // Assuming you have a reset method in the Track class
+        track.reset();
     
-        // Reload the CSV file
     }
     
     

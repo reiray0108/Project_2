@@ -16,6 +16,10 @@ public class Lane {
     private final int location;
     private int currNote = 0;
     private int currHoldNote = 0;
+    private final SpecialNote[] specialNotes = new SpecialNote[100];
+    private int numSpecialNotes = 0;
+    private int currSpecialNote = 0;
+
 
     public Lane(String dir, int location) {
         this.type = dir;
@@ -54,6 +58,19 @@ public class Lane {
         for (int j = currHoldNote; j < numHoldNotes; j++) {
             holdNotes[j].update();
         }
+        
+        for (int k = currSpecialNote; k < numSpecialNotes; k++) {
+            specialNotes[k].update();
+        }
+
+        
+        if (currSpecialNote < numSpecialNotes) {
+            int score = specialNotes[currSpecialNote].checkScore(input, accuracy, TARGET_HEIGHT, relevantKey);
+            if (specialNotes[currSpecialNote].isCompleted()) {
+                currSpecialNote++;
+                return score;
+            }
+        }
 
         if (currNote < numNotes) {
             int score = notes[currNote].checkScore(input, accuracy, TARGET_HEIGHT, relevantKey);
@@ -82,6 +99,12 @@ public class Lane {
         holdNotes[numHoldNotes++] = hn;
     }
 
+    public void addSpecialNote(SpecialNote sn) {
+        specialNotes[numSpecialNotes++] = sn;
+        System.out.println("Added special note of type: " + sn.getType() + " to lane of type: " + getType());
+    }
+    
+
     /**
      * Finished when all the notes have been pressed or missed
      */
@@ -94,6 +117,12 @@ public class Lane {
 
         for (int j = 0; j < numHoldNotes; j++) {
             if (!holdNotes[j].isCompleted()) {
+                return false;
+            }
+        }
+
+        for (int k = 0; k < numSpecialNotes; k++) {
+            if (!specialNotes[k].isCompleted()) {
                 return false;
             }
         }
@@ -134,6 +163,16 @@ public class Lane {
             holdNotes[i].reset();
         }
     }
+    for (int i = 0; i < specialNotes.length; i++) {
+        specialNotes[i] = null;
+    }
+    for (int i = 0; i < numSpecialNotes; i++) {
+        if (specialNotes[i] != null) {
+            specialNotes[i].reset();
+        }
+    }
+    numSpecialNotes = 0;
+    currSpecialNote = 0;    
     numNotes = 0;
     numHoldNotes = 0;
     currNote = 0;

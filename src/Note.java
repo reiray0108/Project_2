@@ -12,9 +12,14 @@ public class Note {
     private boolean completed = false;
 
     public Note(String dir, int appearanceFrame) {
-        image = new Image("res/note" + dir + ".png");
+        if ("Bomb".equals(dir)) {
+            image = new Image("res/noteBomb.png");
+        } else {
+            image = new Image("res/note" + dir + ".png");
+        }
         this.appearanceFrame = appearanceFrame;
     }
+    
 
     public boolean isActive() {
         return active;
