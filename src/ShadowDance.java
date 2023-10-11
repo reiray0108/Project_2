@@ -43,7 +43,6 @@ public class ShadowDance extends AbstractGame  {
     public ShadowDance(){
         super(WINDOW_WIDTH, WINDOW_HEIGHT, GAME_TITLE);
         CSV_FILE = CSV_FILE_2;
-        readCsv();
     }
 
 
@@ -57,17 +56,29 @@ public class ShadowDance extends AbstractGame  {
 
 
     private void readCsv() {
+        System.out.println("Reading CSV: " + CSV_FILE);
+        numLanes = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String textRead;
             while ((textRead = br.readLine()) != null) {
+                System.out.println("Processing line: " + textRead);  // Debug line
                 String[] splitText = textRead.split(",");
 
-                if (splitText[0].equals("Lane")) {
+                if (splitText[0].equals("Lane") && numLanes < 4) {
                     // reading lanes
                     String laneType = splitText[1];
                     int pos = Integer.parseInt(splitText[2]);
                     Lane lane = new Lane(laneType, pos);
                     lanes[numLanes++] = lane;
+                    System.out.println("Added Lane: " + laneType + " at position " + pos);  // Debug line
+                    System.out.println("Total lanes now: " + numLanes);
+                    System.out.println("lanes.length: " + lanes.length);
+                    if (numLanes > lanes.length) {
+                        System.out.println("Error: Too many lanes in CSV!");
+                        return;
+                    }
+                } else if (splitText[0].equals("Lane")){
+                    System.out.println("Attempting to add another lane: " + textRead);
                 } else {
                     // reading notes
                     String dir = splitText[0];
@@ -121,22 +132,28 @@ public class ShadowDance extends AbstractGame  {
 
             if (input.wasPressed(Keys.NUM_1)) {
                 System.out.println("Key 1 Pressed");
-                started = true;
                 CSV_FILE = CSV_FILE_1;
+                resetGameState();
+                readCsv();
+                started = true;
                 System.out.println("Loading CSV: " + CSV_FILE);
                 track = new Track("res/track1.wav");
                 track.start();
             } else if (input.wasPressed(Keys.NUM_2)) {
                 System.out.println("Key 2 Pressed");
-                started = true;
                 CSV_FILE = CSV_FILE_2;
+                resetGameState();
+                readCsv();
+                started = true;
                 System.out.println("Loading CSV: " + CSV_FILE);
                 track = new Track("res/track2.wav");
                 track.start();
             } else if (input.wasPressed(Keys.NUM_3)) {
                 System.out.println("Key 3 Pressed");
-                started = true;
                 CSV_FILE = CSV_FILE_3;
+                resetGameState();
+                readCsv();
+                started = true;
                 System.out.println("Loading CSV: " + CSV_FILE);
                 track = new Track("res/track3.wav");
                 track.start();
@@ -196,4 +213,34 @@ public class ShadowDance extends AbstractGame  {
         }
         return true;
     }
+
+    private void resetGameState() {
+        System.out.println("Resetting game state...");
+        // Reset the game variables
+        started = false;
+        finished = false;
+        paused = false;
+        score = 0;
+        currFrame = 0;
+        numLanes = 0;
+        accuracy.reset();  // Assuming you have a reset method in the Accuracy class
+
+        for (int i = 0; i < lanes.length; i++) {
+            lanes[i] = null;
+        }
+    
+        // Reset the lanes
+        for (Lane lane : lanes) {
+            if (lane != null) {
+                lane.reset();  // Assuming you have a reset method in the Lane class
+            }
+        }
+    
+        // Reset the track
+        track.reset();  // Assuming you have a reset method in the Track class
+    
+        // Reload the CSV file
+    }
+    
+    
 }

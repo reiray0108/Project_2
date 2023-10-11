@@ -33,4 +33,11 @@ public class Track extends Thread {
         }
 
     }
+
+    public void reset() {
+        if (clip != null) {
+            //clip.stop();        // Stop the current track
+            //clip.setFramePosition(0);  // Reset the track to the beginning
+        }
+    }
 }

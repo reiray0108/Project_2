@@ -56,5 +56,12 @@ public class Note {
 
         return 0;
     }
+    
+    public void reset() {
+    y = 100;
+    active = false;
+    completed = false;
+    }
+
 
 }

@@ -95,4 +95,11 @@ public class HoldNote {
     private int getTopHeight() {
         return y - HEIGHT_OFFSET;
     }
+    public void reset() {
+        y = 24;
+        active = false;
+        holdStarted = false;
+        completed = false;
+    }
+    
 }

@@ -116,4 +116,28 @@ public class Lane {
         }
     }
 
+    public void reset() {
+    // Reset the notes and hold notes in this lane
+    for (int i = 0; i < notes.length; i++) {
+        notes[i] = null;
+    }
+    for (int i = 0; i < holdNotes.length; i++) {
+        holdNotes[i] = null;
+    }
+    for (int i = 0; i < numNotes; i++) {
+        if (notes[i] != null) {
+            notes[i].reset();
+        }
+    }
+    for (int i = 0; i < numHoldNotes; i++) {
+        if (holdNotes[i] != null) {
+            holdNotes[i].reset();
+        }
+    }
+    numNotes = 0;
+    numHoldNotes = 0;
+    currNote = 0;
+    currHoldNote = 0;
+    }
+
 }

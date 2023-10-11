@@ -62,4 +62,9 @@ public class Accuracy {
                     Window.getHeight()/2);
         }
     }
+    
+    public void reset() {
+        currAccuracy = null;
+        frameCount = 0;
+    }
 }
